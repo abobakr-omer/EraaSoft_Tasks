@@ -1,0 +1,30 @@
+SELECT RTRIM(
+         LTRIM('234234217www.mywebsite.com', '0123456789w.'),
+         '.com'
+       ) AS website
+FROM dual;
+
+
+-- SUBSTR(text, start_position, length)
+--Now we need the length of mywebsite.
+--The second dot is at position 23.
+--The first dot is at position 13.
+-- finally SUBSTR('234234217www.mywebsite.com', 14, 9)
+SELECT SUBSTR(
+         '234234217www.mywebsite.com',
+         INSTR('234234217www.mywebsite.com', '.') + 1,
+         INSTR('234234217www.mywebsite.com', '.', 1, 2)  --23
+         - INSTR('234234217www.mywebsite.com', '.') - 1  --13      length of website=13-23-1=9  / why (-1) Because we do not want to include the dot 
+         
+       ) AS Website
+FROM dual;
+
+
+-- Easier formatted version but not dynamic
+
+SELECT SUBSTR(
+         '234234217www.mywebsite.com',
+         14,
+         9
+       ) AS website
+FROM dual;
