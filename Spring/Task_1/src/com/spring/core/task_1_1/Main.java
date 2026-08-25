@@ -29,7 +29,8 @@ public class Main {
 		
 		appUserService2.runSave("mostafa");
 		appUserService2.runUpdate("khaled");
-		
+
+		applicationContext.close();
 		
 		
 	}
