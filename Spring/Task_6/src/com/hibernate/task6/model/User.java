@@ -61,7 +61,7 @@ public class User {
 		this.friends = friends;
 		friends.stream().forEach(friend -> {
 			friend.setUsers(Arrays.asList(this));
-		});
+		});	
 	}
 
 	public List<Post> getPosts() {

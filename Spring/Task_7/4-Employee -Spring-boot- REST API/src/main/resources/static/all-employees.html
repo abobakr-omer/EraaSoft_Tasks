@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>All Employees</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div>
+        <a class="back-link" href="index.html">
+            &larr; Back to Operations
+        </a>
+
+        <h1>Show All Employees</h1>
+
+        <p>GET /employee/all-employees</p>
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+                <h2>Employees</h2>
+                <p>
+                    Every employee returned by the API.
+                </p>
+            </div>
+
+
+            <button
+                    class="btn btn-secondary"
+                    onclick="loadEmployees()"
+            >
+                Refresh
+            </button>
+
+        </div>
+
+
+        <div id="message"></div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Phone Number</th>
+                    <th>Actions</th>
+                </tr>
+
+                </thead>
+
+
+                <tbody id="employeeTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div id="emptyState" class="empty-state hidden">
+
+            No employees found.
+
+        </div>
+
+
+        <div class="page-links">
+
+            <a class="btn btn-primary" href="add-employee.html">
+                Add Employee
+            </a>
+
+            <a class="btn btn-secondary" href="index.html">
+                Back to Operations
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="common.js"></script>
+<script src="all-employees.js"></script>
+
+</body>
+</html>

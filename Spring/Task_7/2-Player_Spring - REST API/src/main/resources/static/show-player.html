@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Find Player</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div>
+        <a class="back-link" href="index.html">
+            &larr; Back to Operations
+        </a>
+
+        <h1>Find Player By ID</h1>
+
+        <p>GET /show-player/{id}</p>
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+                <h2>Player Lookup</h2>
+                <p>
+                    Enter the ID of the player you want to load.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form id="findForm">
+
+            <div class="search-area">
+
+                <label class="hidden" for="playerId">
+                    Player ID
+                </label>
+
+                <input
+                        type="number"
+                        id="playerId"
+                        placeholder="Player ID"
+                        min="1"
+                        required
+                >
+
+
+                <button
+                        type="submit"
+                        class="btn btn-primary"
+                >
+                    Find Player
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <div id="message"></div>
+
+
+        <div id="detailsPanel" class="result-panel hidden">
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Number</th>
+                        <th>Salary</th>
+                        <th>Actions</th>
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody id="playerTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <div id="resultPanel" class="result-panel hidden">
+
+            <h3>API Response</h3>
+
+            <pre class="json" id="resultJson"></pre>
+
+        </div>
+
+
+        <div class="page-links">
+
+            <a class="btn btn-secondary" href="all-players.html">
+                Show All Players
+            </a>
+
+            <a class="btn btn-secondary" href="index.html">
+                Back to Operations
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="common.js"></script>
+<script src="show-player.js"></script>
+
+</body>
+</html>

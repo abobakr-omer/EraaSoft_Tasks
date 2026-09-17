@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Update Player</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div>
+        <a class="back-link" href="index.html">
+            &larr; Back to Operations
+        </a>
+
+        <h1>Update Player</h1>
+
+        <p>PUT /update-player/{id}</p>
+    </div>
+</header>
+
+
+<main class="container">
+
+    <!-- ================================================= -->
+    <!-- STEP 1 : LOAD THE PLAYER -->
+    <!-- ================================================= -->
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+                <h2>Step 1 — Load Player</h2>
+                <p>
+                    Enter the ID of the player you want to update.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form id="loadForm">
+
+            <div class="search-area">
+
+                <label class="hidden" for="loadId">
+                    Player ID
+                </label>
+
+                <input
+                        type="number"
+                        id="loadId"
+                        placeholder="Player ID"
+                        min="1"
+                        required
+                >
+
+
+                <button
+                        type="submit"
+                        class="btn btn-primary"
+                >
+                    Load Player
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <div id="message"></div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- STEP 2 : EDIT AND SEND -->
+    <!-- ================================================= -->
+
+    <section id="editCard" class="card hidden">
+
+        <div class="card-header">
+
+            <div>
+                <h2>Step 2 — Edit Player</h2>
+                <p>
+                    The ID travels in the URL, so it cannot be changed here.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form id="updateForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="playerId">
+                        ID
+                    </label>
+
+                    <input
+                            type="number"
+                            id="playerId"
+                            readonly
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="playerName">
+                        Name
+                    </label>
+
+                    <input
+                            type="text"
+                            id="playerName"
+                            placeholder="Player name"
+                            maxlength="255"
+                            required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="playerNumber">
+                        Player Number
+                    </label>
+
+                    <input
+                            type="number"
+                            id="playerNumber"
+                            placeholder="10"
+                            min="0"
+                            required
+                    >
+                </div>
+
+
+                <div class="form-group">
+                    <label for="playerSalary">
+                        Salary
+                    </label>
+
+                    <input
+                            type="number"
+                            id="playerSalary"
+                            placeholder="50000"
+                            min="0"
+                            step="0.01"
+                            required
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="button-group">
+
+                <button
+                        type="submit"
+                        class="btn btn-primary"
+                >
+                    Update Player
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <div id="resultPanel" class="result-panel hidden">
+
+            <h3>Updated Player</h3>
+
+            <pre class="json" id="resultJson"></pre>
+
+        </div>
+
+    </section>
+
+
+    <section class="card">
+
+        <div class="page-links">
+
+            <a class="btn btn-secondary" href="all-players.html">
+                Show All Players
+            </a>
+
+            <a class="btn btn-secondary" href="index.html">
+                Back to Operations
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="common.js"></script>
+<script src="update-player.js"></script>
+
+</body>
+</html>

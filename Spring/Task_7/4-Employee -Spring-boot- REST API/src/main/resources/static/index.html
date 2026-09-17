@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Management</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div>
+        <h1>Employee Management</h1>
+        <p>Spring Boot REST API Dashboard</p>
+    </div>
+</header>
+
+
+<main class="container">
+
+    <!-- ================================================= -->
+    <!-- READ -->
+    <!-- ================================================= -->
+
+    <section class="card">
+
+        <div class="card-header">
+            <div>
+                <h2>Read Operations</h2>
+                <p>
+                    Load employees from the database.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="menu-grid">
+
+
+            <a class="menu-card" href="all-employees.html">
+
+                <span class="method method-get">GET</span>
+
+                <h3>Show All Employees</h3>
+
+                <p>
+                    List every employee stored in the database.
+                </p>
+
+                <span class="endpoint">/employee/all-employees</span>
+
+            </a>
+
+
+            <a class="menu-card" href="employees-by-ids.html">
+
+                <span class="method method-get">GET</span>
+
+                <h3>Get Employees By IDs</h3>
+
+                <p>
+                    Load several employees from a list of IDs.
+                </p>
+
+                <span class="endpoint">/employee/all-employees-By-Ids/{ids}</span>
+
+            </a>
+
+
+            <a class="menu-card" href="search-employees.html">
+
+                <span class="method method-get">GET</span>
+
+                <h3>Search By Name</h3>
+
+                <p>
+                    Search using Derived Query, Native SQL or JPQL.
+                </p>
+
+                <span class="endpoint">/employee/search-by-derived/{name}</span>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- CREATE AND UPDATE -->
+    <!-- ================================================= -->
+
+    <section class="card">
+
+        <div class="card-header">
+            <div>
+                <h2>Create &amp; Update</h2>
+                <p>
+                    Add new employees or change existing ones.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="menu-grid">
+
+
+            <a class="menu-card" href="add-employee.html">
+
+                <span class="method method-post">POST</span>
+
+                <h3>Add Employee</h3>
+
+                <p>
+                    Create a single new employee record.
+                </p>
+
+                <span class="endpoint">/employee/save-employee</span>
+
+            </a>
+
+
+            <a class="menu-card" href="update-employee.html">
+
+                <span class="method method-put">PUT</span>
+
+                <h3>Update Employee</h3>
+
+                <p>
+                    Edit a single existing employee.
+                </p>
+
+                <span class="endpoint">/employee/update-employee</span>
+
+            </a>
+
+
+            <a class="menu-card" href="save-employees.html">
+
+                <span class="method method-post">POST</span>
+
+                <h3>Save Multiple Employees</h3>
+
+                <p>
+                    Create many employees from a JSON array.
+                </p>
+
+                <span class="endpoint">/employee/save-employees</span>
+
+            </a>
+
+
+            <a class="menu-card" href="update-employees.html">
+
+                <span class="method method-put">PUT</span>
+
+                <h3>Update Multiple Employees</h3>
+
+                <p>
+                    Update many employees from a JSON array.
+                </p>
+
+                <span class="endpoint">/employee/update-employees</span>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================================= -->
+    <!-- DELETE -->
+    <!-- ================================================= -->
+
+    <section class="card">
+
+        <div class="card-header">
+            <div>
+                <h2>Delete Operations</h2>
+                <p>
+                    Remove employees from the database.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="menu-grid">
+
+
+            <a class="menu-card" href="delete-employee.html">
+
+                <span class="method method-delete">DELETE</span>
+
+                <h3>Delete Employee</h3>
+
+                <p>
+                    Remove a single employee by ID.
+                </p>
+
+                <span class="endpoint">/employee/delete-employee/{id}</span>
+
+            </a>
+
+
+            <a class="menu-card" href="delete-employees-by-ids.html">
+
+                <span class="method method-delete">DELETE</span>
+
+                <h3>Delete Employees By IDs</h3>
+
+                <p>
+                    Remove several employees from a list of IDs.
+                </p>
+
+                <span class="endpoint">/employee/delete-employees-by-ids/{ids}</span>
+
+            </a>
+
+
+            <a class="menu-card" href="delete-all-employees.html">
+
+                <span class="method method-delete">DELETE</span>
+
+                <h3>Delete All Employees</h3>
+
+                <p>
+                    Remove every employee from the database.
+                </p>
+
+                <span class="endpoint">/employee/delete-all-employees</span>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

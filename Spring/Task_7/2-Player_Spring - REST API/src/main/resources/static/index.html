@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Player Management</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div>
+        <h1>Player Management</h1>
+        <p>Spring Boot REST API Dashboard</p>
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="card">
+
+        <div class="card-header">
+            <div>
+                <h2>Operations</h2>
+                <p>
+                    Choose an operation to open its page.
+                </p>
+            </div>
+        </div>
+
+
+        <div class="menu-grid">
+
+
+            <!-- GET /all-players -->
+
+            <a class="menu-card" href="all-players.html">
+
+                <span class="method method-get">GET</span>
+
+                <h3>Show All Players</h3>
+
+                <p>
+                    List every player stored in the database.
+                </p>
+
+                <span class="endpoint">/all-players</span>
+
+            </a>
+
+
+            <!-- GET /show-player/{id} -->
+
+            <a class="menu-card" href="show-player.html">
+
+                <span class="method method-get">GET</span>
+
+                <h3>Find Player By ID</h3>
+
+                <p>
+                    Load the details of a single player.
+                </p>
+
+                <span class="endpoint">/show-player/{id}</span>
+
+            </a>
+
+
+            <!-- POST /save-player -->
+
+            <a class="menu-card" href="add-player.html">
+
+                <span class="method method-post">POST</span>
+
+                <h3>Add Player</h3>
+
+                <p>
+                    Create a new player record.
+                </p>
+
+                <span class="endpoint">/save-player</span>
+
+            </a>
+
+
+            <!-- PUT /update-player/{id} -->
+
+            <a class="menu-card" href="update-player.html">
+
+                <span class="method method-put">PUT</span>
+
+                <h3>Update Player</h3>
+
+                <p>
+                    Edit the name, number or salary of a player.
+                </p>
+
+                <span class="endpoint">/update-player/{id}</span>
+
+            </a>
+
+
+            <!-- DELETE /delete-player/{id} -->
+
+            <a class="menu-card" href="delete-player.html">
+
+                <span class="method method-delete">DELETE</span>
+
+                <h3>Delete Player</h3>
+
+                <p>
+                    Remove a player from the database.
+                </p>
+
+                <span class="endpoint">/delete-player/{id}</span>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

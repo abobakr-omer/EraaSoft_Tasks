@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Update Multiple Employees</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div>
+        <a class="back-link" href="index.html">
+            &larr; Back to Operations
+        </a>
+
+        <h1>Update Multiple Employees</h1>
+
+        <p>PUT /employee/update-employees</p>
+    </div>
+</header>
+
+
+<main class="container">
+
+    <section class="card">
+
+        <div class="card-header">
+
+            <div>
+                <h2>Employees JSON</h2>
+                <p>
+                    Paste a JSON array of employees.
+                    Existing employee IDs are required.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form id="bulkUpdateForm">
+
+            <div class="form-group">
+
+                <label for="bulkUpdateInput">
+                    Employees to update
+                </label>
+
+                <textarea
+                        id="bulkUpdateInput"
+                        spellcheck="false"
+                        placeholder='[
+  {
+    "id": 1,
+    "name": "Ahmed Updated",
+    "age": 29,
+    "phoneNumber": "01000000000"
+  }
+]'
+                ></textarea>
+
+            </div>
+
+
+            <div class="button-group">
+
+                <button
+                        type="submit"
+                        class="btn btn-primary"
+                >
+                    Update Employees
+                </button>
+
+
+                <button
+                        type="button"
+                        class="btn btn-secondary"
+                        onclick="loadCurrentEmployees()"
+                >
+                    Load Current Employees
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <div id="message"></div>
+
+
+        <div id="resultPanel" class="result-panel hidden">
+
+            <h3>Updated Employees</h3>
+
+            <pre class="json" id="resultJson"></pre>
+
+        </div>
+
+
+        <div class="page-links">
+
+            <a class="btn btn-secondary" href="all-employees.html">
+                Show All Employees
+            </a>
+
+            <a class="btn btn-secondary" href="index.html">
+                Back to Operations
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<script src="common.js"></script>
+<script src="update-employees.js"></script>
+
+</body>
+</html>
