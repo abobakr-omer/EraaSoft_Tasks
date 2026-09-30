@@ -1,0 +1,48 @@
+package com.spring.demo.dto;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class EmployeeWithEmailsRequestDto {
+
+    @NotBlank(message = "Employee name must not be null or empty")
+    private String name;
+
+    @NotNull(message = "Employee age is required")
+    @Min(value = 16, message = "Age must be greater than 15")
+    @Max(value = 39, message = "Age must be less than 40")
+    private Integer age;
+
+    @NotNull(message = "Employee salary is required")
+    @DecimalMin(
+            value = "5000",
+            inclusive = false,
+            message = "Salary must be greater than 5000"
+    )
+    @DecimalMax(
+            value = "10000",
+            inclusive = false,
+            message = "Salary must be less than 10000"
+    )
+    private Double salary;
+
+    @NotEmpty(message = "Email list must not be empty")
+    @Valid
+    private List<EmailEmbeddedRequestDto> emails;
+}
