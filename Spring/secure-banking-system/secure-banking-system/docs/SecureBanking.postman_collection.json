@@ -1,0 +1,1192 @@
+{
+  "info": {
+    "name": "Secure Banking System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Start the app first. Demo users (password Password@123): admin@bank.com, manager@bank.com, auditor@bank.com, eslam@bank.com, ahmed@bank.com (customer id 5, account 1), sara@bank.com (customer id 6, account 2)."
+  },
+  "item": [
+    {
+      "name": "1 - Auth",
+      "item": [
+        {
+          "name": "Register (public)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"New User\",\n  \"email\": \"new.user@bank.com\",\n  \"password\": \"Password@123\",\n  \"phone\": \"0100000000\"\n}"
+            },
+            "description": "Expected 201, role CUSTOMER"
+          }
+        },
+        {
+          "name": "Attack 1 - register with role",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Evil\",\n  \"email\": \"evil@bank.com\",\n  \"password\": \"Password@123\",\n  \"roles\": [\n    \"ROLE_ADMIN\"\n  ]\n}"
+            },
+            "description": "Expected 400"
+          }
+        },
+        {
+          "name": "Test 1 - correct login (/auth/me)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "ahmed@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200"
+          }
+        },
+        {
+          "name": "Test 2 - wrong password",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "ahmed@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Change the password in the Authorization tab to a wrong one. Expected 401"
+          }
+        },
+        {
+          "name": "Test 3 - unknown email",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "auth",
+                "me"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "nobody@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 401"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 - Accounts",
+      "item": [
+        {
+          "name": "Own account (Ahmed, id 1)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "ahmed@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200"
+          }
+        },
+        {
+          "name": "Attack 2 - other account (Ahmed, id 2)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "2"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "ahmed@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 403"
+          }
+        },
+        {
+          "name": "Attack 4 - no login",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Expected 401"
+          }
+        },
+        {
+          "name": "My accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/my-accounts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "my-accounts"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "ahmed@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200, only Ahmed accounts"
+          }
+        },
+        {
+          "name": "Create account (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": 5,\n  \"currency\": \"USD\",\n  \"initialBalance\": 100\n}"
+            },
+            "description": "Expected 201"
+          }
+        },
+        {
+          "name": "Create account (auditor)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "auditor@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": 5,\n  \"currency\": \"USD\",\n  \"initialBalance\": 100\n}"
+            },
+            "description": "Expected 403"
+          }
+        },
+        {
+          "name": "Update account (manager)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "manager@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"ACTIVE\"\n}"
+            },
+            "description": "Expected 200"
+          }
+        },
+        {
+          "name": "Delete account (manager)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "accounts",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "manager@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 403"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 - Transfers",
+      "item": [
+        {
+          "name": "Create transfer (Ahmed)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "ahmed@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fromAccountId\": 1,\n  \"toAccountId\": 2,\n  \"amount\": 100\n}"
+            },
+            "description": "Expected 201, status PENDING"
+          }
+        },
+        {
+          "name": "Transfer from another account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/transfers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "ahmed@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fromAccountId\": 2,\n  \"toAccountId\": 1,\n  \"amount\": 10\n}"
+            },
+            "description": "Expected 403"
+          }
+        },
+        {
+          "name": "Attack 3 - customer approves",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transfers/1/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers",
+                "1",
+                "approve"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "ahmed@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 403"
+          }
+        },
+        {
+          "name": "Auditor approves",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transfers/1/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers",
+                "1",
+                "approve"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "auditor@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 403"
+          }
+        },
+        {
+          "name": "Test 6 - manager approves",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transfers/1/approve",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers",
+                "1",
+                "approve"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "manager@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200, status COMPLETED"
+          }
+        },
+        {
+          "name": "Read transfer (auditor)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/transfers/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "transfers",
+                "1"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "auditor@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4 - Customers and reports",
+      "item": [
+        {
+          "name": "Read customer (manager)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/customers/5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "5"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "manager@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200"
+          }
+        },
+        {
+          "name": "Update customer (manager)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/customers/5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "5"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "manager@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Ahmed Updated\",\n  \"phone\": \"0111111111\"\n}"
+            },
+            "description": "Expected 200"
+          }
+        },
+        {
+          "name": "Read customer (customer)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/customers/5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "customers",
+                "5"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "ahmed@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 403"
+          }
+        },
+        {
+          "name": "Report (auditor)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reports/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reports",
+                "summary"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "auditor@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200"
+          }
+        },
+        {
+          "name": "Report (manager)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/reports/summary",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "reports",
+                "summary"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "manager@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 403"
+          }
+        }
+      ]
+    },
+    {
+      "name": "5 - Admin",
+      "item": [
+        {
+          "name": "Test 5 - customer calls admin endpoint",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/customers/6/block",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "customers",
+                "6",
+                "block"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "ahmed@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 403"
+          }
+        },
+        {
+          "name": "Create customer (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/customers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "customers"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Staff\",\n  \"email\": \"staff@bank.com\",\n  \"password\": \"Password@123\",\n  \"roles\": [\n    \"AUDITOR\"\n  ]\n}"
+            },
+            "description": "Expected 201"
+          }
+        },
+        {
+          "name": "Block customer",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/customers/6/block",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "customers",
+                "6",
+                "block"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200. Sara can no longer log in"
+          }
+        },
+        {
+          "name": "Unblock customer",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/customers/6/unblock",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "customers",
+                "6",
+                "unblock"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200"
+          }
+        },
+        {
+          "name": "Test 4 - disable customer",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/customers/6/disable",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "customers",
+                "6",
+                "disable"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200. Then any request as sara@bank.com gives 401"
+          }
+        },
+        {
+          "name": "Enable customer",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/customers/6/enable",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "customers",
+                "6",
+                "enable"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "description": "Expected 200"
+          }
+        },
+        {
+          "name": "Assign roles",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/customers/6/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "customers",
+                "6",
+                "roles"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"roles\": [\n    \"CUSTOMER\",\n    \"AUDITOR\"\n  ]\n}"
+            },
+            "description": "Expected 200"
+          }
+        },
+        {
+          "name": "List roles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/roles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "roles"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List permissions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/admin/permissions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "admin",
+                "permissions"
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "admin@bank.com",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "Password@123",
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
